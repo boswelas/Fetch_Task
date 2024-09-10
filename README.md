@@ -21,7 +21,6 @@ git clone https://github.com/boswelas/Fetch_Task.git
 * Kotlin: Primary programming language.
 
 ## Resources
-* <a href="https://www.youtube.com/watch?v=l3NtXimXcF8">Mohsen Mashkour's Youtube Tutorial</a>
 * <a href="https://square.github.io/retrofit/">Retrofit Documentation</a>
 * <a href="https://developer.android.com/kotlin/coroutines#kts">Kotlin coroutines on Android</a>
 * <a href="https://developer.android.com/develop/ui/views/layout/recyclerview">Create dynamic lists with RecyclerView</a>
