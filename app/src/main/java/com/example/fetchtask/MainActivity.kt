@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fetchtask.adapters.RvAdapter
 import com.example.fetchtask.databinding.ActivityMainBinding
 import com.example.fetchtask.models.FetchItemsItem
+import com.example.fetchtask.utils.ItemUtils
 import com.example.fetchtask.utils.RetrofitInstance
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -44,8 +45,11 @@ class MainActivity : AppCompatActivity() {
             if (response.isSuccessful && response.body() != null){
                 withContext(Dispatchers.Main){
                     itemsList = response.body()!!
+                    val groupedItems = ItemUtils.groupAndFilterItems(itemsList)
+                    val filteredAndGroupedItems = groupedItems.flatMap { it.value }
+
                     binding.rvMain.apply {
-                        rvAdapter = RvAdapter(itemsList)
+                        rvAdapter = RvAdapter(filteredAndGroupedItems)
                         adapter = rvAdapter
                         layoutManager = LinearLayoutManager(this@MainActivity)
                     }
