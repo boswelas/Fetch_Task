@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
 }
 
+
+
 android {
     namespace = "com.example.fetchtask"
     compileSdk = 34
@@ -54,6 +56,8 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
 
-// Coroutines
+    // Coroutines
     implementation(libs.kotlinx.coroutines.android)
+
 }
+

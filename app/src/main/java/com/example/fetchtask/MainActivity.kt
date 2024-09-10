@@ -35,21 +35,24 @@ class MainActivity : AppCompatActivity() {
         GlobalScope.launch(Dispatchers.IO) {
             val response = try {
                 RetrofitInstance.api.getAllItems()
-            }catch (e: IOException){
-                Toast.makeText(applicationContext, "Application error ${e.message}", Toast.LENGTH_LONG).show()
+            } catch (e: IOException) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(applicationContext, "Application error ${e.message}", Toast.LENGTH_LONG).show()
+                }
                 return@launch
-            }catch (e: HttpException){
-                Toast.makeText(applicationContext, "HTTP error ${e.message}", Toast.LENGTH_LONG).show()
+            } catch (e: HttpException) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(applicationContext, "HTTP error ${e.message}", Toast.LENGTH_LONG).show()
+                }
                 return@launch
             }
-            if (response.isSuccessful && response.body() != null){
-                withContext(Dispatchers.Main){
+            if (response.isSuccessful && response.body() != null) {
+                withContext(Dispatchers.Main) {
                     itemsList = response.body()!!
                     val groupedItems = ItemUtils.groupAndFilterItems(itemsList)
-                    val filteredAndGroupedItems = groupedItems.flatMap { it.value }
 
                     binding.rvMain.apply {
-                        rvAdapter = RvAdapter(filteredAndGroupedItems)
+                        rvAdapter = RvAdapter(groupedItems)
                         adapter = rvAdapter
                         layoutManager = LinearLayoutManager(this@MainActivity)
                     }
