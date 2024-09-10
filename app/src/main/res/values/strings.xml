@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Fetch Task</string>
     <string name="arrow">arrow</string>
+    <string name="fetch_logo">Fetch logo</string>
 </resources>

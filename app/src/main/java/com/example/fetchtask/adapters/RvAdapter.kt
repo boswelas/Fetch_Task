@@ -1,5 +1,6 @@
 package com.example.fetchtask.adapters
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ class RvAdapter(private val fetchItemsMap: Map<Int, List<FetchItemsItem>>) : Rec
     private val expandedListIds = mutableSetOf<Int>()
     private val sortedListIds = fetchItemsMap.keys.sorted()
 
+    @SuppressLint("NotifyDataSetChanged")
     inner class ViewHolder(val binding: ItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
@@ -38,12 +40,13 @@ class RvAdapter(private val fetchItemsMap: Map<Int, List<FetchItemsItem>>) : Rec
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val listId = sortedListIds[position]
-        holder.binding.tvHeader.text = "List ID: $listId"
+        val header = "List Id: $listId"
+        holder.binding.tvHeader.text = header
 
         val items = fetchItemsMap[listId] ?: emptyList()
 
         val sortedItems = items.sortedBy {
-            it.name.removePrefix("Item ").toIntOrNull() ?: Int.MAX_VALUE
+            it.name?.removePrefix("Item ")?.toIntOrNull() ?: Int.MAX_VALUE
         }
 
         holder.binding.contentContainer.removeAllViews()
