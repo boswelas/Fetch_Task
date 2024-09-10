@@ -11,6 +11,7 @@ object ItemUtils {
             it.name != null && it.name.isNotBlank()
         }
 
+
         return filteredItems.groupBy { it.listId }
     }
 }

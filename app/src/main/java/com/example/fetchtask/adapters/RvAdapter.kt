@@ -47,13 +47,20 @@ class RvAdapter(private val fetchItemsMap: Map<Int, List<FetchItemsItem>>) : Rec
         }
 
         holder.binding.contentContainer.removeAllViews()
-        sortedItems.forEach { item ->
+        sortedItems.forEachIndexed { index, item ->
             val nameView = LayoutInflater.from(holder.binding.root.context)
                 .inflate(R.layout.item_name, holder.binding.contentContainer, false) as TextView
             nameView.text = item.name
+
+            val backgroundColor = if (index % 2 == 0) {
+                holder.binding.root.context.getColor(R.color.lightGray)
+            } else {
+                holder.binding.root.context.getColor(R.color.white)
+            }
+            nameView.setBackgroundColor(backgroundColor)
+
             holder.binding.contentContainer.addView(nameView)
         }
-
         val isExpanded = expandedListIds.contains(listId)
         holder.binding.contentContainer.visibility = if (isExpanded) View.VISIBLE else View.GONE
         val arrowIconRes = if (isExpanded) R.drawable.ic_arrow_up else R.drawable.ic_arrow_down
